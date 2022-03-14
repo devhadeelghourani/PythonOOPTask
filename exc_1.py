@@ -5,9 +5,9 @@ class FuelShortage(Exception):
         self.current_fuel = fuel
         self.min_fuel_needed = min_fuel
         msg = "\nCurrent Location: "\
-            f"{self.current_location[0]}:{self.current_location[1]}\n"\
+            f"{current_location[0]}:{current_location[1]}\n"\
             "Destination Location: "\
-            f"{self.destination_location[0]}:{self.destination_location[1]}" \
+            f"{destination_location[0]}:{destination_location[1]}" \
             f"\nFuel we have: {self.current_fuel}\n"\
             f"Minimum fuel we need: {self.min_fuel_needed}\n"
         super().__init__(msg)
@@ -50,10 +50,8 @@ class Plane(Exception):
             print("The remaining fuel: ", self.fuel - distance * 4)
 
     def __str__(self):
-        print("Current Location: ", self.get_plam_location())
-        print("Fuel: ", self.fuel())
-        print(self.fly())
-
+        print("Current Location: ", self.get_plane_location())
+        print("Fuel: ", self.fuel)
 
 if __name__ == '__main__':
     plane_1 = Plane(0, 0, 22)
