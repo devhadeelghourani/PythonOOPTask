@@ -1,15 +1,11 @@
 class FuelShortage(Exception):
-    def __init__(self, current_location, destination_location, fuel, min_fuel):
-        self.current_location = current_location
-        self.destination_location = destination_location
-        self.current_fuel = fuel
-        self.min_fuel_needed = min_fuel
+    def __init__(self, current_location, destination_location, current_fuel, min_fuel):
         msg = "\nCurrent Location: "\
             f"{current_location[0]}:{current_location[1]}\n"\
             "Destination Location: "\
             f"{destination_location[0]}:{destination_location[1]}" \
-            f"\nFuel we have: {self.current_fuel}\n"\
-            f"Minimum fuel we need: {self.min_fuel_needed}\n"
+            f"\nFuel we have: {current_fuel}\n"\
+            f"Minimum fuel we need: {min_fuel}\n"
         super().__init__(msg)
 
 
