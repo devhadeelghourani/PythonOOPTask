@@ -27,6 +27,15 @@ class Concorde(Plane):
             print("The amount of used fuel: ", kilometers * 4)
             print("The coverd distance: ", kilometers * 4)
             print ("The remaining fuel: ", self.fuel - kilometers * 4)
+        
+    def fastest_plane(self, planes):
+        fastest = 0
+        for plane in planes:
+            if fastest == 0:
+                fastest = plane.get_distance()
+            elif fastest > plane.get_distance():
+                fastest = plane.get_distance()
+        return fastest
 
     
 
