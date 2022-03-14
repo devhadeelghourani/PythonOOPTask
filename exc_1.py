@@ -43,8 +43,9 @@ class Plane(Exception):
         minimum_fuel_needed = total_fuel_needed - self.fuel
 
         if total_fuel_needed > self.fuel:
-            raise(PlaneException(self.current_location, self.x2, self.y2, \
-                  self.fuel, minimum_fuel_needed))
+            raise(PlaneException(self.current_location,
+                                 self.destination_location, self.fuel, 
+                                 minimum_fuel_needed))
            
         print("The amount of fuel: ", self.fuel)
         print("The amount of used fuel: ", kilometers * 4)
