@@ -1,4 +1,4 @@
-from exc_1 import Plane
+from exc_1 import FuelShortage, Plane
 class Concorde(Plane):
     def __init__(self,x,y,fuel):
         super().__init__(x,y,fuel)
@@ -18,11 +18,9 @@ class Concorde(Plane):
         else:
             fuel_needed = kilometers * 9
 
-        print(fuel_needed, self.fuel) 
-        print (kilometers)
-
         if fuel_needed > self.fuel:
-            print ("Current FUEL is not enough")
+            min_fuel = fuel_needed - self.fuel
+            raise(FuelShortage(self.current_location, self.destination_location, self.fuel, min_fuel))
         else:
             print("The amount of used fuel: ", kilometers * 4)
             print("The coverd distance: ", kilometers * 4)
@@ -30,20 +28,26 @@ class Concorde(Plane):
         
     def fastest_plane(self, planes):
         fastest = 0
-        for plane in planes:
-            if fastest == 0:
-                fastest = plane.get_distance()
-            elif fastest > plane.get_distance():
-                fastest = plane.get_distance()
-        return fastest
-
-    
-
+        return map(lambda plane : fastest > plane.get_distance(), planes)        
+        
 
 plane_2 = Concorde(1,0,20)
-plane_2.fly(10,10,5)
-plane_2.fly(4,3,3)
+try:
+    plane_2.fly(10,10,5)
+except Exception as e:
+    print(e)
+    
+try:
+    plane_2.fly(4,3,3)
+except Exception as e:
+    print(e)
+    
 plane_2.add_fuel(35)
-print(plane_2.get_plane_fuel())
-plane_2.fly(5,3,3)
-
+try:
+    print(plane_2.get_plane_fuel())
+except Exception as e:
+    print(e)
+try:
+    plane_2.fly(5,3,3)
+except Exception as e:
+    print(e)
