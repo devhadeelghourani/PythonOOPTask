@@ -1,3 +1,4 @@
+from dis import dis
 from exc_1 import FuelShortage, Plane
 class Concorde(Plane):
     def __init__(self,x,y,fuel):
@@ -10,25 +11,29 @@ class Concorde(Plane):
     
     def fly(self, x2, y2, passengers_number):
         self.destination_location = [x2, y2]
-        kilometers = self.get_distance(x2,y2)
+        distance = self.get_distance(x2,y2)
+        
+        # .. Calculate the fuel_needed depending on the distance and the passenger number
         if passengers_number == 0:
-            fuel_needed = kilometers * 4
+            fuel_needed = self.get_fuel_needed(distance, 4)
         elif 0 < passengers_number < 8:
-            fuel_needed = kilometers * 7
+            fuel_needed = self.get_fuel_needed(distance, 7)
         else:
-            fuel_needed = kilometers * 9
+            fuel_needed = self.get_fuel_needed(distance, 9)
 
-        if fuel_needed > self.fuel:
-            min_fuel = fuel_needed - self.fuel
-            raise(FuelShortage(self.current_location, self.destination_location, self.fuel, min_fuel))
+
+        fuel_shortage_flag = fuel_needed > self.fuel
+        if fuel_shortage_flag:
+            required_fuel = fuel_needed - self.fuel
+            raise(FuelShortage(self.current_location, self.destination_location, self.fuel, required_fuel))
         else:
-            print("The amount of used fuel: ", kilometers * 4)
-            print("The coverd distance: ", kilometers * 4)
-            print ("The remaining fuel: ", self.fuel - kilometers * 4)
+            remaineded_fuel = self.fuel - fuel_needed
+            self.fight_data(self.fuel, distance, remaineded_fuel)
+
         
     def fastest_plane(self, planes):
         fastest = 0
-        return map(lambda plane : fastest > plane.get_distance(), planes)        
+        return map(lambda plane : fastest > plane.get_distance() or fastest==0 , planes)        
         
 
 plane_2 = Concorde(1,0,20)

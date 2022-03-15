@@ -22,29 +22,37 @@ class Plane(Exception):
     def get_plane_fuel(self):
         return f"Current Fuel Is:  {self.fuel}"
 
-    def add_fuel(self, value=0):
-        self.fuel += value
-
     def get_distance(self, x2, y2):
         return abs(abs(x2) + abs(self.current_location[0])) + \
             abs(abs(self.current_location[1]) + abs(y2))
 
+    def add_fuel(self, value=0):
+        self.fuel += value
+
+    def get_fuel_needed(self, distance, factor):
+        return distance * factor
+
+    def fight_data(self, fuel, distance, remained_fuel):
+        print("The amount of fuel: ", fuel)
+        print("The amount of used fuel: ", distance * 4)
+        print("The coverd distance: ", distance)
+        print("The remaining fuel: ", remained_fuel)
+
     def fly(self, x2, y2):
         self.destination_location = [x2, y2]
         distance = self.get_distance(x2, y2)
-        fuel_needed = distance * 4
-        minimum_fuel_needed = fuel_needed - self.fuel
-
-        if fuel_needed > self.fuel:
+        fuel_needed = self.get_fuel_needed(distance,4)
+                
+        fuel_shortage_flag = fuel_needed > self.fuel
+        if fuel_shortage_flag:
+            required_fuel = fuel_needed - self.fuel
             raise(FuelShortage(self.current_location,
                                self.destination_location, 
-                               self.fuel, minimum_fuel_needed))
+                               self.fuel, required_fuel))
         else:
-            print("The amount of fuel: ", self.fuel)
-            print("The amount of used fuel: ", distance * 4)
-            print("The coverd distance: ", distance * 4)
-            print("The remaining fuel: ", self.fuel - distance * 4)
-
+            remained_fuel = self.fuel - fuel_needed
+            self.fight_data(self.fuel, distance, remained_fuel)
+            
     def __str__(self):
         print("Current Location: ", self.get_plane_location())
         print("Fuel: ", self.fuel)
