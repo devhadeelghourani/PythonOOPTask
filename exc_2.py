@@ -4,9 +4,8 @@ from exc_1 import Plane
 class Concorde(Plane):
     def __init__(self, x, y, fuel):
         super().__init__(x, y, fuel)
-        self.number_of_passenger = self.passengers_number(0)
     
-    def passengers_number(self, passengers):
+    def validate_passengers_number(self, passengers):
         if not -1 < passengers < 16:
             raise ValueError("Number of passengers not valid!") 
         else:
@@ -14,7 +13,7 @@ class Concorde(Plane):
     
     def fly(self, x2, y2, passengers):
         try:
-            passengers = self.passengers_number(passengers)
+            passengers = self.validate_passengers_number(passengers)
         except Exception as e:
             print(e)
         else:
@@ -22,7 +21,7 @@ class Concorde(Plane):
         
     def fastest_plane(self, planes):
         fastest = 0
-        return map(lambda plane: fastest > plane.get_distance()
+        return map(lambda plane: fastest > plane.get_distance(self.x2, self.y2)
                    or fastest == 0, planes)
                
         
