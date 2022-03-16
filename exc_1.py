@@ -12,24 +12,17 @@ class FuelShortage(Exception):
 
 class Plane(Exception):
     planes_number = 0
-    
+
     def __init__(self, x: int, y: int, fuel: float) -> object:
-        self.planes_number += 1
+        Plane.planes_number += 1
         self.current_location = [x, y]
         self.destination_location = []
         self.fuel = fuel
         self.distance = 0
 
-    def get_planes_number(self) -> int:
-        """ Counting the number of the planes
-
-        Returns:
-            int: number of planes
-        """
-        return self.planes_number
-
     def get_plane_location(self) -> list:
-        """Setting the current plane location, before taking off
+        """
+        Setting the current plane location, before taking off
 
         Returns:
             list: the cordinates of the current location [x, y]
@@ -37,7 +30,8 @@ class Plane(Exception):
         return f"Location: {self.current_location}"
 
     def get_plane_fuel(self) -> float:
-        """ find the amount of fuel in the plane
+        """
+        find the amount of fuel in the plane
 
         Returns:
             float: plane fuel
@@ -45,13 +39,21 @@ class Plane(Exception):
         return f"Current Fuel Is:  {self.fuel}"
 
     def get_distance(self, x2: int, y2: int) -> int:
+        """
+        calculate destance of the trip
+        Args:
+            x2 (int): X-coordinate of the destination
+            y2 (int): Y-coordinate of the destination
+
+        Returns:
+            int: destance between current location and destination
+        """
         return abs(abs(x2) + abs(self.current_location[0])) + \
             abs(abs(self.current_location[1]) + abs(y2))
 
     def add_fuel(self, value: float):
         """
-        enables us to increase the fuel with a spesific amount the user pass 
-
+        enables us to increase the fuel with a spesific amount the user pass
         Args:
             value (float): amount of additional fuel
 
@@ -59,9 +61,9 @@ class Plane(Exception):
         self.fuel += value
 
     def minimum_fuel_needed(self, distance: int, passengers: int) -> int:
-        """summary:
-        calculate the minimum amount of fuel the
-        plane needs to be able to take off.
+        """
+        calculate the minimum amount of plane
+        fuel which we need to take off.
         Amount of fuel depends on two factors:
         1- flight distance
         2- passengers number
@@ -79,10 +81,10 @@ class Plane(Exception):
             return distance * 7
         else:
             return distance * 9
-        
+
     def fight_details(self, fuel: float, distance: int,
                       remaineded_fuel: float) -> None:
-        """summary:
+        """
         print out the flight details:
         1- Total fuel before the plane taking off.
         2- Fuel used through the trip
@@ -100,17 +102,15 @@ class Plane(Exception):
         print("The remaining fuel: ", remaineded_fuel)
 
     def fly(self, x2: int, y2: int, passengers: int = 0) -> None:
-        """summary:
+        """
         * Main Goal: print put the flight details.
         
         * Needs the coordinates of currnet location, destination location
           and passengers numbers.
         * checking if the fuel in enough for the flight
-          using the fuel_shortage_flage.  
-        * And finaly, since every thing is okay, it prints 
-          the details of the flight.    
-           
-
+          using the fuel_shortage_flage.
+        * And finaly, since every thing is okay, it prints
+          the details of the flight.
         Args:
             x2 (int): X-coordinate of the destination
             y2 (int): Y-coordinate of the destination
@@ -124,22 +124,23 @@ class Plane(Exception):
         if fuel_shortage_flag:
             required_fuel = fuel_needed - self.fuel
             raise(FuelShortage(self.current_location,
-                               self.destination_location, 
+                               self.destination_location,
                                self.fuel, required_fuel))
         else:
             remained_fuel = self.fuel - fuel_needed
             self.fight_details(self.fuel, distance, remained_fuel)
-            
+
     def __str__(self) -> None:
-        """_summary_
+        """
         print out the plane current location and the fuel
         """
         print("Current Location: ", self.get_plane_location())
         print("Fuel: ", self.fuel)
-        
-        
+
+
 if __name__ == '__main__':
     plane_1 = Plane(0, 0, 22)
+    plane_2 = Plane(0, 0, 555)
     try:
         plane_1.fly(3, 4)
     except Exception as e:
@@ -150,3 +151,4 @@ if __name__ == '__main__':
     except Exception as e:
         print(e)
     plane_1.fly(3, 5)
+    print(Plane.planes_number)
