@@ -1,8 +1,9 @@
-from dis import dis
-from exc_1 import FuelShortage, Plane
+from exc_1 import Plane
+
+
 class Concorde(Plane):
-    def __init__(self,x,y,fuel):
-        super().__init__(x,y,fuel)
+    def __init__(self, x, y, fuel):
+        super().__init__(x, y, fuel)
         self.number_of_passenger = self.passengers_number(0)
     
     def passengers_number(self, passengers):
@@ -21,17 +22,18 @@ class Concorde(Plane):
         
     def fastest_plane(self, planes):
         fastest = 0
-        return map(lambda plane : fastest > plane.get_distance() or fastest==0 , planes)        
+        return map(lambda plane: fastest > plane.get_distance()
+                   or fastest == 0, planes)
+               
         
-
-plane_2 = Concorde(1,0,20)
+plane_2 = Concorde(1, 0, 20)
 try:
-    plane_2.fly(10,10,5)
+    plane_2.fly(10, 10, 5)
 except Exception as e:
     print(e)
     
 try:
-    plane_2.fly(4,3,3)
+    plane_2.fly(4, 3, 3)
 except Exception as e:
     print(e)
     
@@ -41,6 +43,6 @@ try:
 except Exception as e:
     print(e)
 try:
-    plane_2.fly(5,3,3)
+    plane_2.fly(5, 3, 3)
 except Exception as e:
     print(e)
