@@ -29,8 +29,14 @@ class Plane(Exception):
     def add_fuel(self, value=0):
         self.fuel += value
 
-    def get_fuel_needed(self, distance, factor):
-        return distance * factor
+    def minimum_fuel_needed(self, distance, passengers):
+        if passengers == 0:
+            return distance * 4
+        elif 0 < passengers < 8:
+            return distance * 7
+        else:
+            return distance * 9
+        
 
     def fight_data(self, fuel, distance, remained_fuel):
         print("The amount of fuel: ", fuel)
@@ -38,10 +44,10 @@ class Plane(Exception):
         print("The coverd distance: ", distance)
         print("The remaining fuel: ", remained_fuel)
 
-    def fly(self, x2, y2):
+    def fly(self, x2, y2, passengers):
         self.destination_location = [x2, y2]
         distance = self.get_distance(x2, y2)
-        fuel_needed = self.get_fuel_needed(distance,4)
+        fuel_needed = self.minimum_fuel_needed(distance,0)
                 
         fuel_shortage_flag = fuel_needed > self.fuel
         if fuel_shortage_flag:
@@ -60,12 +66,12 @@ class Plane(Exception):
 if __name__ == '__main__':
     plane_1 = Plane(0, 0, 22)
     try:
-        plane_1.fly(3, 4)
-    except Exception as e:
+        plane_1.fly(3, 4, 0)
+    except Exception as e: 
         print(e)
     plane_1.add_fuel(10)
     try:
-        plane_1.fly(10, 10)
+        plane_1.fly(10, 10, 0)
     except Exception as e:
         print(e)
-    plane_1.fly(3, 5)
+    plane_1.fly(3, 5, 0)

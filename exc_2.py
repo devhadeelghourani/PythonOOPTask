@@ -8,28 +8,16 @@ class Concorde(Plane):
     def passengers_number(self, passengers):
         if not -1 < passengers < 16:
             raise ValueError("Number of passengers not valid!") 
+        else:
+            return passengers
     
-    def fly(self, x2, y2, passengers_number):
-        self.destination_location = [x2, y2]
-        distance = self.get_distance(x2,y2)
-        
-        # .. Calculate the fuel_needed depending on the distance and the passenger number
-        if passengers_number == 0:
-            fuel_needed = self.get_fuel_needed(distance, 4)
-        elif 0 < passengers_number < 8:
-            fuel_needed = self.get_fuel_needed(distance, 7)
+    def fly(self, x2, y2, passengers):
+        try:
+            passengers = self.passengers_number(passengers)
+        except Exception as e:
+            print(e)
         else:
-            fuel_needed = self.get_fuel_needed(distance, 9)
-
-
-        fuel_shortage_flag = fuel_needed > self.fuel
-        if fuel_shortage_flag:
-            required_fuel = fuel_needed - self.fuel
-            raise(FuelShortage(self.current_location, self.destination_location, self.fuel, required_fuel))
-        else:
-            remaineded_fuel = self.fuel - fuel_needed
-            self.fight_data(self.fuel, distance, remaineded_fuel)
-
+            super().fly(x2, y2, passengers)
         
     def fastest_plane(self, planes):
         fastest = 0
